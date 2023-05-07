@@ -1,4 +1,4 @@
-import { Optional } from "sequelize";
+import { Optional } from 'sequelize';
 import {
   Table,
   Column,
@@ -12,10 +12,10 @@ import {
   HasMany,
   BelongsToMany,
   DefaultScope,
-  BelongsTo,
-} from "sequelize-typescript";
-import { User } from "./User";
-import { UserTicket } from "./UserTicket";
+  BelongsTo
+} from 'sequelize-typescript';
+import { User } from './User';
+import { UserTicket } from './UserTicket';
 
 interface TicketAttributes {
   id: number;
@@ -34,19 +34,14 @@ interface TicketAttributes {
   phone: string;
 }
 
-export interface TicketInput
-  extends Optional<TicketAttributes, "id" | "assignedId"> {}
-export interface TicketOutput
-  extends Optional<TicketAttributes, "assignedId"> {}
+export type TicketInput = Optional<TicketAttributes, 'id' | 'assignedId'>;
+export type TicketOutput = Optional<TicketAttributes, 'assignedId'>;
 
 // @DefaultScope(() => ({
 //     include: [{model: Ticket, attributes}]
 // }))
 @Table
-export class Ticket
-  extends Model<TicketAttributes, TicketInput>
-  implements TicketAttributes
-{
+export class Ticket extends Model<TicketAttributes, TicketInput> implements TicketAttributes {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -95,6 +90,8 @@ export class Ticket
   public affectedId!: number;
 
   public readonly createdAt!: Date;
+
   public readonly updatedAt!: Date;
+
   public readonly deletedAt!: Date;
 }

@@ -1,72 +1,65 @@
-import { RequestHandler } from "express";
-import { User } from "../../../database/models/User";
-import * as utils from "../../../crypto/utils";
-import { CreateUserDTO } from "../../dto/user.dto";
-import * as userController from "../../controllers/user/index";
+import { RequestHandler } from 'express';
+import { User } from '../../../database/models/User';
+import * as utils from '../../../crypto/utils';
+import { CreateUserDTO } from '../../dto/user.dto';
+import * as userController from '../../controllers/user/index';
 
 export const create: RequestHandler = async (req, res, next) => {
-   try {
-      const payload: CreateUserDTO = req.body;
-      const exists = await userController.retrieve(payload.email);
-      if (!exists) {
-         const result = await userController.create(payload);
-         const jwt = utils.issueJWT(result);
-         res.status(200).json({ user: result, tokenInfo: jwt });
-      } else {
-         res.status(409).json({ success: false, msg: "Email already exists" });
-      }
-   } catch (error) {
-      res.status(500).json({ message: "Failed to create user" });
-   }
+  try {
+    const payload: CreateUserDTO = req.body;
+    const exists = await userController.retrieve(payload.email);
+    if (!exists) {
+      const result = await userController.create(payload);
+      const jwt = utils.issueJWT(result);
+      res.status(200).json({ user: result, tokenInfo: jwt });
+    } else {
+      res.status(409).json({ success: false, msg: 'Email already exists' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create user' });
+  }
 };
 
 export const login: RequestHandler = async (req, res, next) => {
-   try {
-      const user = await userController.retrieve(req.body.email);
+  try {
+    const user = await userController.retrieve(req.body.email);
 
-      if (!user) {
-         return res
-            .status(404)
-            .json({ message: "User with that email was not found" });
-      }
+    if (!user) {
+      return res.status(404).json({ message: 'User with that email was not found' });
+    }
 
-      const match = await utils.validPassword(req.body.pwd, user.pwd);
+    const match = await utils.validPassword(req.body.pwd, user.pwd);
 
-      if (match) {
-         const jwt = utils.issueJWT(user);
+    if (match) {
+      const jwt = utils.issueJWT(user);
 
-         return res.status(200).json({
-            success: true,
-            token: jwt.token,
-            expiresIn: jwt.expires,
-            user: user.firstName,
-         });
-      } else {
-         return res
-            .status(401)
-            .json({ success: false, message: "Invalid credentials" });
-      }
-   } catch (error) {
-      return res
-         .status(500)
-         .json({ message: "Unable to process user login", error: error });
-   }
+      return res.status(200).json({
+        success: true,
+        token: jwt.token,
+        expiresIn: jwt.expires,
+        user: user.firstName
+      });
+    }
+    return res.status(401).json({ success: false, message: 'Invalid credentials' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Unable to process user login', error });
+  }
 };
 
 // TODO: Needs to have the ability to retrieve a another user by id as well
 export const retrieveUser: RequestHandler = async (req, res, next) => {
-   try {
-      const user: User = req.user as User;
+  try {
+    const user: User = req.user as User;
 
-      if (user == null) {
-         return res.status(404).json({ message: "User not found!" });
-      }
+    if (user == null) {
+      return res.status(404).json({ message: 'User not found!' });
+    }
 
-      return res.status(200).json({ success: true, data: user });
-   } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Unable to retrieve user!" });
-   }
+    return res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Unable to retrieve user!' });
+  }
 };
 
 // export const listUsers: RequestHandler = async (req, res, next) => {

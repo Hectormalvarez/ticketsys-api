@@ -1,20 +1,16 @@
-import { create, login, retrieveUser } from "./users";
-import passport from "passport";
-import { Router } from "express";
+import passport from 'passport';
+import { Router } from 'express';
+import { create, login, retrieveUser } from './users';
 
 const userRouter = Router();
 
 // userRouter.get("/", listUsers);
 
-userRouter.post("/register", create);
+userRouter.post('/register', create);
 
-userRouter.post("/login", login);
+userRouter.post('/login', login);
 
-userRouter.get(
-   "/myaccount",
-   passport.authenticate("jwt", { session: false }),
-   retrieveUser
-);
+userRouter.get('/myaccount', passport.authenticate('jwt', { session: false }), retrieveUser);
 
 // userRouter.delete(
 //   "/:id",

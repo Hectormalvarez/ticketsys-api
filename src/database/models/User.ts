@@ -1,4 +1,4 @@
-import { Optional } from "sequelize";
+import { Optional } from 'sequelize';
 import {
   Table,
   Column,
@@ -9,10 +9,10 @@ import {
   AutoIncrement,
   Unique,
   BelongsToMany,
-  HasMany,
-} from "sequelize-typescript";
-import { Ticket } from "./Ticket";
-import { UserTicket } from "./UserTicket";
+  HasMany
+} from 'sequelize-typescript';
+import { Ticket } from './Ticket';
+import { UserTicket } from './UserTicket';
 
 interface UserAttributes {
   id: number;
@@ -28,14 +28,11 @@ interface UserAttributes {
   deletedAt?: Date;
 }
 
-export interface UserInput extends Optional<UserAttributes, "id" | "salt"> {}
-export interface UserOutput extends Required<UserAttributes> {}
+export type UserInput = Optional<UserAttributes, 'id' | 'salt'>;
+export type UserOutput = Required<UserAttributes>;
 
 @Table
-export class User
-  extends Model<UserAttributes, UserInput>
-  implements UserAttributes
-{
+export class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   @AutoIncrement
   @PrimaryKey
   @Column(DataType.INTEGER)

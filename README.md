@@ -1,6 +1,6 @@
-Note: Documentation Still In Progress...
-
 # Ticketing System API
+
+Note: Documentation Still In Progress...
 
 This is an API for a ticketing system that allows users to create, view, and manage tickets.
 
@@ -26,25 +26,26 @@ To run this API on your local machine, you will need to have Node.js and MySQL i
 2. Open a terminal and navigate to the project directory.
 3. Run `npm install` to install the required dependencies.
 4. Set up your environment variables. Create a `dbConfig.ts` file in the src/config directory of the project and add the following code:
-```
-var dbConfig = {
-  HOST: "localhost",
-  USER: "root",
-  PASSWORD: "[password]",
-  DB: "[Database Name]",
-  DIALECT: "mysql",
 
-  pool: {
-    max: 5,
-    min: 0,
-    aquire: 30000,
-    idle: 10000,
-  },
-};
+   ```javascript
+   var dbConfig = {
+     HOST: 'localhost',
+     USER: 'root',
+     PASSWORD: '[password]',
+     DB: '[Database Name]',
+     DIALECT: 'mysql',
 
-export default dbConfig;
+     pool: {
+       max: 5,
+       min: 0,
+       aquire: 30000,
+       idle: 10000
+     }
+   };
 
-```
+   export default dbConfig;
+   ```
+
 5. Run `npm start` to start the server.
 6. The API will now be available at `http://localhost:8080`.
 
@@ -56,7 +57,7 @@ The following features are available:
 
 Get a list of tickets.
 
-#### Query parameters
+#### GET /tickets/filter Query parameters
 
 - `status`: Filter by ticket status (optional). Possible values: `open`, `closed`.
 - `priority`: Filter by ticket priority (optional). Possible values: `low`, `medium`, `high`.
@@ -65,7 +66,7 @@ Get a list of tickets.
 
 Get the details of a specific ticket.
 
-#### Path parameters
+#### GET /tickets/:id Path parameters
 
 - `id`: The ID of the ticket.
 
@@ -73,7 +74,7 @@ Get the details of a specific ticket.
 
 Create a new ticket.
 
-#### Request body
+#### POST /tickets Request body
 
 - `title`: The title of the ticket.
 - `description`: The description of the ticket.
@@ -84,11 +85,11 @@ Create a new ticket.
 
 Update the status or priority of a ticket.
 
-#### Path parameters
+#### PUT /tickets/:id Path parameters
 
 - `id`: The ID of the ticket.
 
-#### Request body
+#### PUT /tickets/:id Request body
 
 - `priority` (optional): The new priority of the ticket. Possible values: `low`, `medium`, `high`.
 - `status` (optional): The new status of the ticket. Possible values: `open`, `closed`.
@@ -97,14 +98,15 @@ Update the status or priority of a ticket.
 
 Delete a ticket.
 
-#### Path parameters
+#### DELETE /tickets/:id Path parameters
 
 - `id`: The ID of the ticket.
 
 ## Error Handling
 
 This API uses standard HTTP status codes to indicate success or failure of requests. In case of an error, a JSON response with the following format will be returned:
-```
+
+```json
 {
   "error": {
     "code": <HTTP status code>,

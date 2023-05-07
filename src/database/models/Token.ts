@@ -5,9 +5,9 @@ import {
   DataType,
   ForeignKey,
   PrimaryKey,
-  BelongsTo,
-} from "sequelize-typescript";
-import { User } from "./User";
+  BelongsTo
+} from 'sequelize-typescript';
+import { User } from './User';
 
 interface TokenAttributes {
   id?: number;
@@ -35,6 +35,8 @@ export class Token extends Model<TokenAttributes> implements TokenAttributes {
   public token?: string;
 
   public readonly createdAt!: Date;
+
   public readonly updatedAt!: Date;
+
   public readonly deletedAt!: Date;
 }

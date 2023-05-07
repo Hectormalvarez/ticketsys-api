@@ -1,10 +1,10 @@
-import { Ticket, TicketInput, TicketOutput } from "../models/Ticket";
-import { Op } from "sequelize";
+import { Op } from 'sequelize';
+import { Ticket, TicketInput, TicketOutput } from '../models/Ticket';
 
 export const create = async (payload: TicketInput): Promise<TicketOutput> => {
-   const ticket = await Ticket.create(payload);
+  const ticket = await Ticket.create(payload);
 
-   return ticket;
+  return ticket;
 };
 
 // export const list = async (...params: any[]): Promise<TicketOutput[]> => {
@@ -40,11 +40,11 @@ export const create = async (payload: TicketInput): Promise<TicketOutput> => {
 // };
 
 export const list = async (whereClause: any): Promise<TicketOutput[]> => {
-   let result: Ticket[] = [];
+  let result: Ticket[] = [];
 
-   result = await Ticket.findAll({
-      where: whereClause,
-   });
+  result = await Ticket.findAll({
+    where: whereClause
+  });
 
-   return result;
+  return result;
 };

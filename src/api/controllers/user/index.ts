@@ -1,15 +1,13 @@
-import { User } from "../../interfaces/index";
-import { CreateUserDTO } from "../../dto/user.dto";
-import * as mapper from "./mapper";
-import * as service from "../../services/userService";
+import { User } from '../../interfaces/index';
+import { CreateUserDTO } from '../../dto/user.dto';
+import * as mapper from './mapper';
+import * as service from '../../services/userService';
 
-export const create = async (payload: CreateUserDTO): Promise<User> => {
-  return mapper.toUser(await service.create(payload));
-};
+export const create = async (payload: CreateUserDTO): Promise<User> =>
+  mapper.toUser(await service.create(payload));
 
-export const retrieve = async (payload: string): Promise<User | null> => {
-  return await service.retrieve(payload);
-};
+export const retrieve = async (payload: string): Promise<User | null> =>
+  await service.retrieve(payload);
 
 // export const listUsers: RequestHandler = async (req, res, next) => {
 //   const usersList: User[] = await User.findAll();

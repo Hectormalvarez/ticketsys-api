@@ -10,10 +10,10 @@ import {
   ForeignKey,
   HasMany,
   BelongsToMany,
-  BelongsTo,
-} from "sequelize-typescript";
-import { Ticket } from "./Ticket";
-import { User } from "./User";
+  BelongsTo
+} from 'sequelize-typescript';
+import { Ticket } from './Ticket';
+import { User } from './User';
 
 interface UserTicketAttributes {
   reportedId: number;
@@ -21,7 +21,7 @@ interface UserTicketAttributes {
   assignedId: number;
 }
 
-@Table({ tableName: "user_tickets", underscored: true })
+@Table({ tableName: 'user_tickets', underscored: true })
 export class UserTicket extends Model {
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)

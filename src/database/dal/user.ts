@@ -1,5 +1,5 @@
-import { User, UserInput, UserOutput } from "../models/User";
-import * as util from "../../crypto/utils";
+import { User, UserInput, UserOutput } from '../models/User';
+import * as util from '../../crypto/utils';
 
 export const create = async (payload: UserInput): Promise<UserOutput> => {
   payload.salt = await util.genSalt();

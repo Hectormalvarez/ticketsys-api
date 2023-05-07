@@ -1,6 +1,6 @@
-import { RequestHandler } from "express";
-import { Token } from "../../database/models/Token";
-import { User } from "../../database/models/User";
+import { RequestHandler } from 'express';
+import { Token } from '../../database/models/Token';
+import { User } from '../../database/models/User';
 
 export const createToken: RequestHandler = async (req, res, next) => {
   // TODO: Ready to implement JSON Web Tokens
@@ -10,13 +10,11 @@ export const retrieveUserFromToken: RequestHandler = async (req, res, next) => {
   try {
     const tokenInfo = await Token.findOne({
       where: { id: req.params.id },
-      include: [User],
+      include: [User]
     });
 
-    return res
-      .status(200)
-      .json({ message: "Found the user with that token", data: tokenInfo });
+    return res.status(200).json({ message: 'Found the user with that token', data: tokenInfo });
   } catch (error) {
-    return res.status(500).json({ message: "Something went wrong" });
+    return res.status(500).json({ message: 'Something went wrong' });
   }
 };
